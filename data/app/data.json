@@ -5,16 +5,16 @@
     "Create": {
         "archive-dir": "<MAIN>/data/assets/archive",
         "archive-items": {
-            "Variable Test": "/variable_test.txt",
-            "Prime Test": "/prime_test.txt",
-            "Character Multiplyer": "/character_multiplyer.txt"
+            "Character Multiplyer": "/character_multiplyer.txt",
+            "Rangoli Pattern": "/rangoli_pattern.txt",
+            "Prime Test": "/prime_test.txt"
         }
     },
     "Test": {
         "funcs-dirs": [
             "<MAIN>/functions/funcs.py",
             "<MAIN>/functions/main_func.py",
-            "/Users/razortype/Desktop/PTF/x.py"
+            "/example/to/path/in/your/directory/file.py"
         ]
     }
 }

@@ -1,10 +1,10 @@
 # Python Function Quality Manager
-lorem ipsum sit amet
+Python Function Quality Manager
 
 ## Obligatory Tasks
 
 ### Cli Commands
- [] create
+ [x] create
  [] data
   > Change option under construction
  [x] load
@@ -15,7 +15,7 @@ lorem ipsum sit amet
  [] Deploy Manager
   > App json data not changable
  [x] Test Manager
- [] Create Manager
+ [x] Create Manager
 
 ### Generator Functions
  [x] Number
@@ -25,6 +25,14 @@ lorem ipsum sit amet
  [x] List
  [x] Dict
 
-## Future Tasks
+ ### Unit Tests
+ [] generator test
+  > Test not working with inserted path
+ [] manager test
+ [] display test
 
-### Gui
+### Required
+[] delete function archived test cases
+[] DP print result of generate variable
+
+### Gui (?)

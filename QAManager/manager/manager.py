@@ -31,10 +31,10 @@ class DeployManager(Manager):
         self.output_lst = []
         self.pattern = ""
 
-    def load_case(self): ## NOT STABLE ## !!!!!!
+    def load_case(self):
         with open(self.get_full_path(self.get_data()["Deploy"]["case-dir"]), "r") as case_file:
-            lines = h.clean_lines(case_file.readlines())
-        
+            lines = case_file.read().split(c.Vars.TEST_SPLIT)
+
         for line in lines:
             ipt, res = line.split(c.Vars.IO_CASE_SPLIT)
 
@@ -78,7 +78,7 @@ class DeployManager(Manager):
                 data["Create"]["archive-items"][name] = file_name
                 
                 h.deploy_json(self.get_full_path(c.Vars.DATA_JSON_DIR), data)
-                h.save_to_archive(archive_dir, file_name, "\n".join(results))
+                h.save_to_archive(archive_dir, file_name, c.Vars.TEST_SPLIT.join(results))
 
 class CreateManager(Manager):
  
@@ -97,6 +97,7 @@ class CreateManager(Manager):
         self.process_func = func
 
     def evaluate_pattern(self):
+        self.generated_variables = []
         variable_columns = self.pattern.split(c.Vars.VARS_SPLIT)
         for variable in variable_columns:
             self.generated_variables.append(self.random_generator.eval_pattern(variable))

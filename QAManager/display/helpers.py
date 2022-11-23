@@ -24,6 +24,7 @@ def result_filter(results):
     return [i for i in results if not i[-1]]
 
 def check_passed(results):
+    if not results: return False
     return all([i[-1] for i in results])
 
 def convert_table_valid(*args):

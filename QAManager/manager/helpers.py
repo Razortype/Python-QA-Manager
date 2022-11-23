@@ -17,7 +17,7 @@ def clean_lines(lines):
     return [line.replace("\n","") for line in lines]
 
 def seperate_vars(string, param):
-    return list((eval(i),type(eval(i)).__name__) for i in string.split(param))
+    return list((eval(i.replace("\n","\\n")),type(eval(i.replace("\n","\\n"))).__name__) for i in string.split(param))
 
 def load_file(name,dir):
     spec = importlib.util.spec_from_file_location(name,dir)

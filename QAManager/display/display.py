@@ -1,5 +1,6 @@
 from rich.table import Table
 from rich.console import Console
+from rich import box
 import json
 from pygments import highlight
 from pygments.formatters.terminal256 import Terminal256Formatter
@@ -30,7 +31,7 @@ class Display:
     @classmethod
     def print_func_table(cls, file_data):
         
-        table = Table(show_header=True, header_style="bold blue")
+        table = Table(show_header=True, header_style="bold blue", box=box.MINIMAL_HEAVY_HEAD)
         table.add_column("#", style="dim", width=len(file_data), justify="center")
         table.add_column("Name", min_width=15)
         table.add_column("Variable(s)", min_width=15)
@@ -50,7 +51,7 @@ class Display:
     @classmethod
     def print_func_table_detail(cls, file_data):
         
-        table = Table(show_header=True, header_style="bold blue")
+        table = Table(show_header=True, header_style="bold blue", box=box.MINIMAL_HEAVY_HEAD)
         table.add_column("#", style="dim", width=len(file_data), justify="center")
         table.add_column("Name", min_width=15)
         table.add_column("Variable(s)", min_width=15)
@@ -95,7 +96,7 @@ class Display:
     @classmethod
     def print_result_table(cls, results, pattern: str=""):
 
-        table = Table(show_header=True, header_style="bold blue")
+        table = Table(show_header=True, header_style="bold blue", box=box.HEAVY)
         table.add_column("#", style="dim", width=h.max_digit_len(results), justify="center")
         table.add_column(f"Variables {pattern}", min_width=15)
         table.add_column("Expected", min_width=15)
@@ -154,7 +155,7 @@ class Display:
 
     @classmethod
     def return_empty_help_table(cls, title, color=c.Colors.white):
-        table = Table(show_header=True, header_style=f"bold {color}", title=c.Fonts.table_title.format(title), title_justify="left")
+        table = Table(show_header=True, header_style=f"bold {color}", title=c.Fonts.table_title.format(title), title_justify="left", box=box.HORIZONTALS)
         table.add_column("#", style="dim", width=3, justify="center")
         table.add_column("Argument", min_width=10)
         table.add_column("Description", min_width=35)
@@ -241,5 +242,6 @@ class Display:
         cls.console.print(c.Fonts.table_title.format("RULES and EXCEPTIONS"))
         cls.console.print(c.Fonts.splitter_definition.format(f"Function Splitter defined as      {m_c.Vars.IO_CASE_SPLIT}"))
         cls.console.print(c.Fonts.splitter_definition.format(f"Variable Splitter defined as      {m_c.Vars.VARS_SPLIT}"))
+        cls.console.print(c.Fonts.splitter_definition.format("Test Cases Splitter defined as    {}".format(m_c.Vars.TEST_SPLIT.replace("\n","\\n"))))
         cls.console.print(c.Fonts.splitter_definition.format(f"Main directory splitter define as {m_c.Vars.MAIN_DIR_SPLIT}"))
         cls.console.print(c.Fonts.splitter_definition.format("Recursive not working in pattern"))

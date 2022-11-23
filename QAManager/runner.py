@@ -23,24 +23,24 @@ create_manager = CreateManager(MAIN_DIR, random_generator)
 test_manager = TestManager(MAIN_DIR)
 
 @app.command()
-def valids(detail: bool = typer.Option(
-                help='Table will be demonstrate function with much more detailed and informative versions',
+def funcs(detail: bool = typer.Option(
+                help='Detailed information of validated functions\' will be demonstrated too.',
                 default=False
             )):
     """
-    Displays valid functions in fetched function directory.\n
-    If --detail is not used, given information and detail will be restricted
+    Scan and validate functions with respected to predetermined directories in 'data.json' file.\n
+    with --detail property, more detailed information of validation functions will be demonstrated
     """
     test_manager.load_funcs()
     DP.print_funcs(test_manager.funcs, detailed=detail)
 
 @app.command()
 def data(change: bool = typer.Option(
-                help="data.json file be demonstrated and ask for replacement.",
+                help="After demonstration of 'data.json' file, system will ask for change.",
                 default=False
             )):
     """
-    Demonstrate current data object's varaibles and their values.
+    Pretty print 'data.json' file
     """
     DP.print_json_data(deploy_manager.get_data())
     if change:
@@ -48,29 +48,31 @@ def data(change: bool = typer.Option(
     
 
 @app.command()
-def create(pattern: str = typer.Option(
-                help='''Creating test-case with given VARIABLES. (ex:"<variable_type>('s':5,'e':10)")''',
+def create(show: bool = typer.Option(
+                help="Documentation displayed as table for creating a valid pattern.",
+                default=False
+            ),
+            pattern: str = typer.Option(
+                help='''Declaring pattern for creating arguments for function. Needed for creating a valid test scenarios.''',
                 default=None
             ),
             func_name: str = typer.Option(
-                help='''Creating test-case with given FUNCTION NAME. (ex:"<func_name>")''',
+                help='''Declaring pre-written function for generated variables. Needed for creating a valid test scenarios.''',
                 default=None
             ),
             amount: int =typer.Option(
-                help='''Creating "amount" test case''',
+                help='''Helps to declare n amount test scenarios.''',
                 default=1
             ),
             save: bool = typer.Option(
                 help="Manager will ask if created data should be saved in archive or not",
                 default=False
-            ),
-            show: bool = typer.Option(
-                help="Variables and functions will be demonstrated for creating a pattern",
-                default=False
             )
             ):
     """
-    Creates test case senarious with given pattern.
+    Creates test case senarious with given pattern and function.
+    '--pattern' and '--func-name' are required for creating valid test cases
+    use '--save' with other properties to save results
     """
 
     if show:
@@ -81,9 +83,10 @@ def create(pattern: str = typer.Option(
     create_manager.deploy_pattern(pattern)
     
     if pattern and not func_name:
-        create_manager.evaluate_pattern()
         # DP print executed variables
-        print(create_manager.generated_variables)
+        for _ in range(amount):
+            create_manager.evaluate_pattern()
+            print(create_manager.generated_variables)
     
     if pattern and func_name:
         
@@ -120,19 +123,19 @@ def load(case_name: str = typer.Option(
     
 @app.command()
 def run(funcs: str = typer.Option(
-                help='''Decleration of function names. If func_names empthy it returns all## keyword that makes all function running.''',
+                help='''Initially, functions can be indicated. If there is no function declared, all function will be tested. use comma between function names ("func1,func2")''',
                 default="all##"
             ),
             table: bool = typer.Option(
-                help='''Displays table, default value is True''',
+                help='''Demonstrate result of test cases.''',
                 default = True
             ),
             filter: bool = typer.Option(
-                help='''Displays only filtered(wrong) test case''',
+                help='''Displays only filtered (WRONG) test case(s).''',
                 default = False
             ),
             passed: bool = typer.Option(
-                help='''Creates a little table for passed function and order by elapsed time''',
+                help='''Demonstrate litte section for passed function that ordered with elapsed time.''',
                 default = False
             )
         ):
