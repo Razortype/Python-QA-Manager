@@ -148,10 +148,18 @@ class Display:
 
     @classmethod
     def print_archive(cls, data):
+
+        table = Table(show_header=True, header_style="bold blue", title_justify="left", box=box.HORIZONTALS)
+        table.add_column("#", style="dim", width=3, justify="center")
+        table.add_column("Archive Name", min_width=20)
+        table.add_column("Archive File Name (.txt)", min_width=15)
+
         archives = data["Create"]["archive-items"]
         for index, arc in enumerate(archives.items(), 1):
             arc_name, arc_val = arc
-            print(f"{index}) {arc_name:<15} = {arc_val}")
+            table.add_row(str(index), arc_name, arc_val)
+
+        cls.console.print(table)
 
     @classmethod
     def return_empty_help_table(cls, title, color=c.Colors.white):
@@ -162,6 +170,32 @@ class Display:
         table.add_column("Default", min_width=7, justify="center")
 
         return table
+
+    @classmethod
+    def print_generated_variables(cls, variable_list):
+        
+        if not variable_list:
+            cls.console.print(c.Fonts.passed_error.format("NO VARIABLE GENERATED"))
+            return
+        
+        table = Table(show_header=True, title_style=f"bold {c.Colors.orange}", title="Generated Variables", header_style=f"bold {c.Colors.yellow}", box=box.HEAVY, min_width=20)
+        table.add_column("#", style="dim")
+        for i in variable_list[0]:
+            table.add_column(str(i.__class__.__name__), justify="center")
+        for index, var in enumerate(variable_list, 1):
+            table.add_row(str(index), *[str(i) for i in var])
+        cls.console.print(table)
+
+    @classmethod
+    def print_generated_archive(cls, archive_result=[]):
+        table = Table(show_header=False, title_style=f"bold {c.Colors.magenta}", title="Archive Result", box=box.HEAVY, min_width=15)
+        table.add_column("#", style="dim", width=3, justify="center")
+        table.add_column("Test Case", min_width=15, justify="center")
+
+        for i, val in enumerate(archive_result, 1):
+            table.add_row(str(i), val)
+
+        cls.console.print(table)
 
     @classmethod
     def print_pattern_help(cls):

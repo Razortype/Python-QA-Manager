@@ -83,10 +83,12 @@ def create(show: bool = typer.Option(
     create_manager.deploy_pattern(pattern)
     
     if pattern and not func_name:
-        # DP print executed variables
+        
+        generated_variables = []
         for _ in range(amount):
             create_manager.evaluate_pattern()
-            print(create_manager.generated_variables)
+            generated_variables.append(create_manager.generated_variables)
+        DP.print_generated_variables(generated_variables)
     
     if pattern and func_name:
         
@@ -96,8 +98,7 @@ def create(show: bool = typer.Option(
 
         archive_result = create_manager.conver_to_archive()
         
-        # DP print executed variables
-        print("\n".join(archive_result))
+        DP.print_generated_archive(archive_result)
         
         if save:
             deploy_manager.save_archive(archive_result)

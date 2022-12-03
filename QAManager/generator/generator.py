@@ -73,8 +73,6 @@ class RandomGenerator:
 
     @classmethod
     def _dict(cls, times: int=5, key_type: str=None, value_type: str=None, key_args: dict={}, value_args: dict={}) -> dict:
-        print(key_args)
-        print(value_args)
         if times <= 0: return {}
         if key_type is None or value_type is None: return {}
         if h.func_exists(key_type, cls.get_func()) or h.func_exists(value_type, cls.get_func()): return {}
